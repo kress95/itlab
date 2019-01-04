@@ -1,0 +1,20 @@
+{
+  "rulesDirectory": "node_modules/tslint-microsoft-contrib",
+  "extends": [
+    "tslint-config-standard",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "no-suspicious-comment": {"severity": "warning"},
+    "ordered-imports": [true, {
+      "severity": "warning",
+      "import-sources-order": "case-insensitive",
+      "module-source-path": "full",
+      "grouped-imports": true,
+      "named-imports-order": "any"
+    }],
+    "no-conditional-assignment": false,
+    "one-variable-per-declaration": false,
+    "no-floating-promises": false
+  }
+}
