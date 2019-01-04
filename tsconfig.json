@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"],
+      "@server/*": ["src/server/*"],
+      "@client/*": ["src/client/*"]
+    },
     "moduleResolution": "node",
-    "baseUrl": "./src",
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -9,16 +15,12 @@
     "noUnusedParameters": false,
     "sourceMap": true,
     "pretty": true,
-    "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["@types/node"]
+    "outDir": "dist"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "__test__"
-  ]
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": ["node_modules", "__test__"]
 }

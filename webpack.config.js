@@ -2,6 +2,7 @@ const path = require('path')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 const isTest = process.env.NODE_ENV === 'test'
@@ -20,35 +21,49 @@ if (isProd) {
 }
 
 const src = path.resolve(__dirname, 'src')
-
-const babelLoader = {
-  test: /\.ts$/,
-  use: ['babel-loader', 'ts-loader'],
-  include: src,
-}
+const models = path.resolve(__dirname, 'models')
 
 const performance = {hints: false}
 const mode = isProd ? 'production' : 'development'
-const resolve = {extensions: ['.ts', '.js']}
+const resolve = {
+  extensions: ['.ts', '.js'],
+  plugins: [new TsconfigPathsPlugin({configFile: './tsconfig.json'})],
+}
 
 module.exports = [
   {
-    entry: path.resolve(src, 'client.ts'),
-    module: {rules: [babelLoader]},
+    entry: path.resolve(src, 'client', 'index.ts'),
+    module: {
+      rules: [
+        {
+          test: /\.{ts,js}$/,
+          use: ['babel-loader', 'ts-loader'],
+          include: [src],
+        },
+      ],
+    },
     target: isTest ? 'node' : 'web',
     externals: isTest ? [nodeExternals()] : [],
     plugins: clientPlugins,
     output: {
       filename: 'bundle.js',
-      path: path.resolve(__dirname, 'dist', "public"),
+      path: path.resolve(__dirname, 'dist', 'public'),
     },
     performance,
     mode,
     resolve,
   },
   {
-    entry: path.resolve(src, 'server.ts'),
-    module: {rules: [babelLoader]},
+    entry: path.resolve(src, 'server', 'index.ts'),
+    module: {
+      rules: [
+        {
+          test: /\.ts$/,
+          use: ['babel-loader', 'ts-loader'],
+          include: [src, models],
+        },
+      ],
+    },
     target: 'node',
     externals: [nodeExternals()],
     output: {
@@ -58,5 +73,5 @@ module.exports = [
     performance,
     mode,
     resolve,
-  }
+  },
 ]
