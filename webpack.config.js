@@ -26,17 +26,17 @@ const models = path.resolve(__dirname, 'models')
 const performance = {hints: false}
 const mode = isProd ? 'production' : 'development'
 const resolve = {
-  extensions: ['.ts', '.js'],
+  extensions: ['.ts', '.tsx', '.js'],
   plugins: [new TsconfigPathsPlugin({configFile: './tsconfig.json'})],
 }
 
 module.exports = [
   {
-    entry: path.resolve(src, 'client', 'index.ts'),
+    entry: path.resolve(src, 'client', 'index.tsx'),
     module: {
       rules: [
         {
-          test: /\.{ts,js}$/,
+          test: /\.(ts|tsx|js)$/,
           use: ['babel-loader', 'ts-loader'],
           include: [src],
         },

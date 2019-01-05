@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"],
+      "@data/*": ["src/data/*"],
       "@server/*": ["src/server/*"],
       "@client/*": ["src/client/*"]
     },
@@ -11,6 +12,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "jsx": "react",
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "sourceMap": true,
@@ -21,6 +23,6 @@
     "emitDecoratorMetadata": true,
     "outDir": "dist"
   },
-  "include": ["**/*.ts", "**/*.js"],
+  "include": ["**/*.ts", "**/*.tsx","**/*.js"],
   "exclude": ["node_modules", "__test__"]
 }

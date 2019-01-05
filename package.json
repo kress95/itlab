@@ -6,8 +6,6 @@
     "pre-commit": "npm-run-all lint format test",
     "lint": "tslint -t codeFrame --project ./tsconfig.json --fix 'src/**/*.ts' 'test/**/*.ts'",
     "format": "prettier --write \"{config,migrations,models,seeders,src}/**/*.{ts,js}\"",
-    "test": "jest",
-    "test-watch": "jest --watch",
     "build": "webpack",
     "watch:build": "webpack -w",
     "start": "node ./dist/server.js",
@@ -19,9 +17,7 @@
     "db:seed": "sequelize db:seed:all"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.11",
     "husky": "^1.0.0-rc.2",
-    "jest": "^23.6.0",
     "nodemon": "^1.18.9",
     "prettier": "^1.15.3"
   },
@@ -33,13 +29,11 @@
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
     "@types/react-redux": "^6.0.12",
-    "@types/redux": "^3.6.0",
     "@types/sequelize": "^4.27.33",
     "babel-loader": "^8.0.5",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "html-webpack-plugin": "^3.2.0",
     "npm-run-all": "^4.1.5",
