@@ -1,7 +1,7 @@
 import * as express from 'express'
 
-import models from './models'
 import * as order from './controllers/order'
+import models from './models'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -15,3 +15,9 @@ models
 app.get('/api/order/constraints', (req, res) => order.constraints(req, res))
 
 app.get('/api/order/list', (req, res) => order.list(req, res))
+
+app.get('/api/order/create', (req, res) => order.create(req, res))
+
+app.get('/api/order/edit', (req, res) => order.edit(req, res))
+
+app.get('/api/order/delete', (req, res) => order.create(req, res))

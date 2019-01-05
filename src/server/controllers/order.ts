@@ -18,3 +18,15 @@ export async function list(req: Request, res: Response) {
     orders: await Orders.findAll(),
   })
 }
+
+export async function create(req: Request, res: Response) {
+  throw 'Not yet implemented.'
+}
+
+export async function edit(req: Request, res: Response) {
+  throw 'Not yet implemented.'
+}
+
+export async function remove(req: Request, res: Response) {
+  throw 'Not yet implemented.'
+}
