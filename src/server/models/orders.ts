@@ -8,20 +8,14 @@ import {
   PrimaryKey,
   Table,
   Length,
+  Min,
 } from 'sequelize-typescript'
 
-<<<<<<< HEAD
 import Products from './products'
 import OrderServices from './orderServices'
 import PaymentMethods from './paymentMethods'
 import Services from './services'
 import Order from '@data/order'
-=======
-import Appliances from './appliances'
-import OrderVoltages from './orderVoltages'
-import PaymentMethods from './paymentMethods'
-import Voltages from './voltages'
->>>>>>> 96e931e... Lint
 
 @Table({timestamps: false})
 export default class Orders extends Model<Orders> implements Order {
@@ -30,14 +24,15 @@ export default class Orders extends Model<Orders> implements Order {
   @Column({defaultValue: DataType.UUIDV4})
   id!: string
 
+  @Length({min: 1, max: 64})
   @Column
   clientName!: string
 
   @Column
   date!: Date
 
-  @Column(DataType.DECIMAL)
-  @Length({min: 0})
+  @Min(0)
+  @Column(DataType.DECIMAL())
   value!: number
 
   @ForeignKey(() => Products)

@@ -1,32 +1,79 @@
-import Appliances from '@server/models/appliances'
-import Orders from '@server/models/orders'
+import Products from '@/src/server/models/products'
+import Orders from '@/src/server/models/orders'
+import db from '@server/models'
+import OrderServices from '@server/models/orderServices'
 import PaymentMethods from '@server/models/paymentMethods'
-import Voltages from '@server/models/voltages'
+import Services from '@server/models/services'
 import {Request} from 'express'
 import {Response} from 'express-serve-static-core'
+import {AppState} from '@data/appState'
 
-export async function constraints(req: Request, res: Response) {
-  return res.json({
-    paymentMethods: await PaymentMethods.findAll(),
-    appliances: await Appliances.findAll(),
-    voltages: await Voltages.findAll(),
-  })
-}
-
+/**
+ * Retorna todas as Orders e todos os campos válidos do sistema.
+ */
 export async function list(req: Request, res: Response) {
   return res.json({
-    orders: await Orders.findAll(),
+    constraints: {
+      paymentMethods: await PaymentMethods.findAll(),
+      products: await Products.findAll(),
+      services: await Services.findAll(),
+    },
+    orders: await Orders.findAll({
+      include: [Services],
+      order: [['date', 'DESC']],
+    }),
+  } as AppState)
+}
+
+/**
+ * Insere uma Order.
+ */
+export async function create(req: Request, res: Response) {
+  const b = req.body
+
+  db.transaction(async t => {
+    const order = await Orders.create(
+      {
+        clientName: b.clientName,
+        date: b.date,
+        value: b.value,
+        productId: b.productId,
+        paymentMethodId: b.paymentMethodId,
+      },
+      {transaction: t},
+    )
+
+    const orderId = order.id
+
+    return Promise.all(
+      b.services.map((serviceId: string) =>
+        OrderServices.create({orderId, serviceId}, {transaction: t}),
+      ),
+    )
   })
 }
 
-export async function create(req: Request, res: Response) {
-  throw 'Not yet implemented.'
+/**
+ * Modifica uma Order.
+ */
+export async function update(req: Request, res: Response) {
+  const b = req.body
+
+  return Orders.update(
+    {
+      clientName: b.clientName,
+      date: b.date,
+      value: b.value,
+      productId: b.productId,
+      paymentMethodId: b.paymentMethodId,
+    },
+    {where: {id: req.params.id}},
+  )
 }
 
-export async function edit(req: Request, res: Response) {
-  throw 'Not yet implemented.'
-}
-
+/**
+ * Remove uma Order.
+ */
 export async function remove(req: Request, res: Response) {
-  throw 'Not yet implemented.'
+  return Orders.destroy({where: {id: req.params.id}})
 }
