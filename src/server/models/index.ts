@@ -2,6 +2,7 @@ import {Sequelize} from 'sequelize-typescript'
 
 import * as Config from '../config/config'
 
+<<<<<<< HEAD
 import Products from './products'
 import Orders from './orders'
 import PaymentMethods from './paymentMethods'
@@ -9,6 +10,12 @@ import Services from './services'
 import OrderServices from './orderServices'
 
 type Env = 'production' | 'development' | 'test'
+=======
+import Appliances from './appliances'
+import Orders from './orders'
+import PaymentMethods from './paymentMethods'
+import Voltages from './voltages'
+>>>>>>> 96e931e... Lint
 
 const env = (process.env.NODE_ENV || 'development') as Env
 const config = Config[env]

@@ -1,12 +1,12 @@
 import {
   Column,
-  DataType,
   ForeignKey,
   IsUUID,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript'
+
 import Orders from './orders'
 import Services from './services'
 
