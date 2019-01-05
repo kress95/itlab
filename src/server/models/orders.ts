@@ -7,18 +7,20 @@ import {
   BelongsToMany,
   PrimaryKey,
   Table,
+  Length,
 } from 'sequelize-typescript'
 
-import Appliances from './appliances'
+import Products from './products'
+import OrderServices from './orderServices'
 import PaymentMethods from './paymentMethods'
-import Voltages from './voltages'
-import OrderVoltages from './orderVoltages'
+import Services from './services'
+import Order from '@data/order'
 
 @Table({timestamps: false})
-export default class Orders extends Model<Orders> {
+export default class Orders extends Model<Orders> implements Order {
   @IsUUID(4)
   @PrimaryKey
-  @Column
+  @Column({defaultValue: DataType.UUIDV4})
   id!: string
 
   @Column
@@ -28,13 +30,17 @@ export default class Orders extends Model<Orders> {
   date!: Date
 
   @Column(DataType.DECIMAL)
+  @Length({min: 0})
   value!: number
 
-  @ForeignKey(() => Appliances)
+  @ForeignKey(() => Products)
   @Column
-  applianceId!: string
+  productId!: string
 
   @ForeignKey(() => PaymentMethods)
   @Column
   paymentMethodId!: string
+
+  @BelongsToMany(() => Services, () => OrderServices)
+  services!: Services[]
 }

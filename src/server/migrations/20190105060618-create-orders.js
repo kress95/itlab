@@ -17,9 +17,9 @@ module.exports = {
       value: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      applianceId: {
+      productId: {
         type: Sequelize.UUID,
-        references: {model: 'Appliances', key: 'id'},
+        references: {model: 'Products', key: 'id'},
       },
       paymentMethodId: {
         type: Sequelize.UUID,
